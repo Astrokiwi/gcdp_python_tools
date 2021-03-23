@@ -9,7 +9,7 @@ Install by:
 
 You can then use
 
-import gcd-tools
+     import gcd-tools
 
 in Python to access the library.
 
