@@ -1,0 +1,30 @@
+Tools for viewing GCD+ files with Python
+
+Install by:
+
+git clone https://github.com/Astrokiwi/gcdp_python_tools.git .
+pip install ./gcdp_python_tools
+
+If you want to edit the package in this directory, then do
+
+pip install -e ./gcdp_python_tools
+
+to install in "editable" mode.
+
+You can then use
+
+import gcd-tools
+
+in Python to access the library.
+
+The most important part is gcd_tools.gcd_tools.gcd_data(). You initialize this object with a directory, and load in the arrays piece by piece. It produces a Pandas dataframe, but this can be converted into a pynbody snapshot, which is probably preferable.
+
+Sample usage:
+
+gr = gcd_data("/srv/username/gcd/1800") # set up directory
+
+gr.read_base(9) # load snapshot 9 (hydro & stars)
+gr.read_extra_hydro() # more hydrodynamics data
+gr.read_dark() # load dark matter
+gr.convert_units() # convert to physical units
+snap = gr.to_pynbody() # convert to pynbody snapshot

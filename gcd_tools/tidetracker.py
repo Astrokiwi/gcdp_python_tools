@@ -1,6 +1,5 @@
-from sys import path,exit,argv
-path.append("../src/")
-from pyreadall import *
+from sys import argv
+from . import gcd_tools
 
 import numpy as np
 from numpy import sqrt,log
@@ -39,7 +38,7 @@ min_dt = 1.e5/TMUYR
 class tideTracker:
     def __init__(self,irunStr,gcdpDir = None):
         if gcdpDir is None:
-            gcdpDir = (pyreadall.get_dirname()).decode("utf-8")
+            gcdpDir = gcd_tools.get_dir(irunStr)
             gcdpDir = gcdpDir.strip()
 
         iniPramsFile = gcdpDir+"/"+irunStr+"/diskev/ini/input.dat"

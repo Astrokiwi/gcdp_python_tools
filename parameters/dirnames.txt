@@ -1,0 +1,4 @@
+/list/your/gcdp/directories/here
+/one/directory/per/line
+/user/home/gcdp/etc
+/srv/drive1/users/noobslayer/whatever

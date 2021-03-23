@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import pynbody
 import os.path
-import tidetracker
+
+from . import tidetracker
 
 def gridsize_from_n(n,aspect=1.):
     nx = 1
@@ -290,7 +291,7 @@ def dump_times(run):
     root_dir = get_dir(run)
     full_dir = "{}/{}".format(root_dir,run)
     times = extract_times(full_dir)
-    np.savetxt("../data/timedump{}.dat".format(run),times)
+    np.savetxt("data/timedump{}.dat".format(run),times)
 
 def unglitched_times(run):
     times = np.loadtxt("../data/timedump{}.dat".format(run))
@@ -300,10 +301,10 @@ def unglitched_times(run):
         if times[itime]<oldtime:
             good_times.append(itime)
             oldtime=times[itime]
-    np.savetxt("../data/timecleaned{}.dat".format(run),good_times[::-1])
+    np.savetxt("data/timecleaned{}.dat".format(run),good_times[::-1])
 
 def times_to_dumps(time_stops,run):
-    fname = "../data/timedump{}.dat".format(run)
+    fname = "data/timedump{}.dat".format(run)
     if not os.path.isfile(fname):
         dump_times(run)
     times = np.loadtxt(fname)
@@ -311,13 +312,13 @@ def times_to_dumps(time_stops,run):
     return idumps
 
 def add_tides(snap,td):
-    snap["x"]-=td.gp_x*tidetracker.LUKPC
-    snap["y"]-=td.gp_y*tidetracker.LUKPC
-    snap["z"]-=td.gp_z*tidetracker.LUKPC
+    snap["x"]-= td.gp_x * tidetracker.LUKPC
+    snap["y"]-= td.gp_y * tidetracker.LUKPC
+    snap["z"]-= td.gp_z * tidetracker.LUKPC
 
-    snap["vx"]-=td.gp_vx*tidetracker.VUKMS
-    snap["vy"]-=td.gp_vy*tidetracker.VUKMS
-    snap["vz"]-=td.gp_vz*tidetracker.VUKMS
+    snap["vx"]-= td.gp_vx * tidetracker.VUKMS
+    snap["vy"]-= td.gp_vy * tidetracker.VUKMS
+    snap["vz"]-= td.gp_vz * tidetracker.VUKMS
 
 
 # TODO - add these as proper derived arrays
