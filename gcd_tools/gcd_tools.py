@@ -352,6 +352,27 @@ def unit_preserving_norm(x):
 def unit_preserving_norm2(x):
     return np.sum(x**2,axis=1)
 
+def extract_sf(dir,timecol=28,sfcol=25,tstep=1.e7,munit=1.e3,tunit=1.e9):
+    filename = dir + "/diskev/output/ana/system.dat"
+    timedata = np.loadtxt(filename, skiprows=1,usecols=(sfcol,timecol))
+
+    times = timedata[:, 1]
+    isf_tot = timedata[:, 0]
+
+    isf_tot = isf_tot - isf_tot[0]
+
+    times *= tunit  # to years
+    isf_tot *= munit  # to solar masses
+
+    # sample cumulative star formation at fixed intervals in time, then difference to get star formation rate
+    sf_indices = np.searchsorted(times, np.arange(0,times[-1],tstep))
+
+    t_sliced = times[sf_indices]
+    sf_sliced = isf_tot[sf_indices]
+
+    sfr = np.gradient(sf_sliced,t_sliced)
+
+    return t_sliced,sfr
 
 # test package
 if __name__ == "__main__":
